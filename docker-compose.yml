@@ -1,0 +1,75 @@
+version: '3.9'
+
+services:
+
+  sdss_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sdss_app
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/html
+      - /var/www/html/vendor
+    networks:
+      - sdss_network
+    depends_on:
+      sdss_postgres:
+        condition: service_healthy
+
+  sdss_nginx:
+    image: nginx:alpine
+    container_name: sdss_nginx
+    restart: unless-stopped
+    ports:
+      - '8088:80'
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - sdss_network
+    depends_on:
+      - sdss_app
+
+  sdss_postgres:
+    image: postgres:15-alpine
+    container_name: sdss_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: sdss_db
+      POSTGRES_USER: sdss_user
+      POSTGRES_PASSWORD: sdss_secret
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - sdss_network
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sdss_user -d sdss_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  sdss_pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: sdss_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@sdss.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - '5050:80'
+    volumes:
+      - ./docker/pgadmin/servers.json:/pgadmin4/servers.json
+    networks:
+      - sdss_network
+    depends_on:
+      - sdss_postgres
+
+networks:
+  sdss_network:
+    driver: bridge
+
+volumes:
+  pgdata:

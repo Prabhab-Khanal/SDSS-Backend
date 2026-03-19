@@ -1,0 +1,13 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "SDSS PostgreSQL",
+            "Group": "Servers",
+            "Host": "sdss_postgres",
+            "Port": 5432,
+            "MaintenanceDB": "sdss_db",
+            "Username": "sdss_user",
+            "SSLMode": "prefer"
+        }
+    }
+}
