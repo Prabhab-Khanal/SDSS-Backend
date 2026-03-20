@@ -671,6 +671,123 @@
                     }
                 ]
             }
+        },
+        "/api/browse/users": {
+            "get": {
+                "tags": [
+                    "Browse"
+                ],
+                "summary": "List all browsable users (excludes self and admins)",
+                "operationId": "browseUsers",
+                "responses": {
+                    "200": {
+                        "description": "Users retrieved"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/browse/users/{user}/folders": {
+            "get": {
+                "tags": [
+                    "Browse"
+                ],
+                "summary": "List root folders of a user",
+                "operationId": "browseFolders",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User folders retrieved"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/browse/users/{user}/folders/{folder}": {
+            "get": {
+                "tags": [
+                    "Browse"
+                ],
+                "summary": "Get contents of a specific folder of a user",
+                "operationId": "browseFolderContents",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "folder",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Folder contents retrieved"
+                    },
+                    "404": {
+                        "description": "Folder does not belong to this user"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/browse/users/{user}/files": {
+            "get": {
+                "tags": [
+                    "Browse"
+                ],
+                "summary": "List root-level files of a user",
+                "operationId": "browseFiles",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User files retrieved"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -698,6 +815,10 @@
         {
             "name": "Storage",
             "description": "Storage"
+        },
+        {
+            "name": "Browse",
+            "description": "Browse"
         }
     ]
 }

@@ -54,13 +54,13 @@ Route::middleware(['auth:api', 'account.approved'])->group(function () {
     Route::delete('/files/{file}',        [FileController::class, 'destroy']);
     Route::get('/files/{file}/download',  [FileController::class, 'download']);
 
-    // // Browse other users' storage (metadata only)
-    // Route::prefix('browse')->group(function () {
-    //     Route::get('/users',                              [BrowseController::class, 'users']);
-    //     Route::get('/users/{user}/folders',               [BrowseController::class, 'folders']);
-    //     Route::get('/users/{user}/folders/{folder}',      [BrowseController::class, 'folderContents']);
-    //     Route::get('/users/{user}/files',                 [BrowseController::class, 'files']);
-    // });
+    // Browse other users' storage (metadata only)
+    Route::prefix('browse')->group(function () {
+        Route::get('/users',                              [BrowseController::class, 'users']);
+        Route::get('/users/{user}/folders',               [BrowseController::class, 'folders']);
+        Route::get('/users/{user}/folders/{folder}',      [BrowseController::class, 'folderContents']);
+        Route::get('/users/{user}/files',                 [BrowseController::class, 'files']);
+    });
 
     // // Access requests
     // Route::post('/files/{file}/access-requests',            [AccessRequestController::class, 'store']);
