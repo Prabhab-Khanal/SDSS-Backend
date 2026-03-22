@@ -31,8 +31,8 @@ Route::middleware(['auth:api', 'account.approved'])->group(function () {
         Route::patch('/users/{user}/reject',  [AdminUserController::class, 'reject']);
         Route::patch('/users/{user}/suspend', [AdminUserController::class, 'suspend']);
 
-    //     Route::get('/audit-logs',             [AuditLogController::class, 'index']);
-    //     Route::get('/audit-logs/{auditLog}',  [AuditLogController::class, 'show']);
+        Route::get('/audit-logs',             [AuditLogController::class, 'index']);
+        Route::get('/audit-logs/{auditLog}',  [AuditLogController::class, 'show']);
     });
 
     // Full storage tree
@@ -62,19 +62,19 @@ Route::middleware(['auth:api', 'account.approved'])->group(function () {
         Route::get('/users/{user}/files',                 [BrowseController::class, 'files']);
     });
 
-    // // Access requests
-    // Route::post('/files/{file}/access-requests',            [AccessRequestController::class, 'store']);
-    // Route::get('/access-requests/outgoing',                 [AccessRequestController::class, 'outgoing']);
-    // Route::get('/access-requests/incoming',                 [AccessRequestController::class, 'incoming']);
-    // Route::patch('/access-requests/{accessRequest}/approve', [AccessRequestController::class, 'approve']);
-    // Route::patch('/access-requests/{accessRequest}/reject',  [AccessRequestController::class, 'reject']);
+    // Access requests
+    Route::post('/files/{file}/access-requests',            [AccessRequestController::class, 'store']);
+    Route::get('/access-requests/outgoing',                 [AccessRequestController::class, 'outgoing']);
+    Route::get('/access-requests/incoming',                 [AccessRequestController::class, 'incoming']);
+    Route::patch('/access-requests/{accessRequest}/approve', [AccessRequestController::class, 'approve']);
+    Route::patch('/access-requests/{accessRequest}/reject',  [AccessRequestController::class, 'reject']);
 
-    // // File access via authorization token
-    // Route::get('/files/access/{token}', [FileAccessController::class, 'download']);
+    // File access via authorization token
+    Route::get('/files/access/{token}', [FileAccessController::class, 'download']);
 
-    // // Notifications
-    // Route::get('/notifications',                      [NotificationController::class, 'index']);
-    // Route::get('/notifications/unread-count',          [NotificationController::class, 'unreadCount']);
-    // Route::patch('/notifications/{notification}/read', [NotificationController::class, 'markAsRead']);
-    // Route::post('/notifications/read-all',             [NotificationController::class, 'markAllAsRead']);
+    // Notifications
+    Route::get('/notifications',                      [NotificationController::class, 'index']);
+    Route::get('/notifications/unread-count',          [NotificationController::class, 'unreadCount']);
+    Route::patch('/notifications/{notification}/read', [NotificationController::class, 'markAsRead']);
+    Route::post('/notifications/read-all',             [NotificationController::class, 'markAllAsRead']);
 });
