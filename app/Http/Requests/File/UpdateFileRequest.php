@@ -14,7 +14,7 @@ class UpdateFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'regex:/^[^\/\\\\\.\.]+$/'],
+            'name' => ['required', 'string', 'max:255', 'regex:/^(?!.*\.\.)(?!.*[\/\\\\])[^\/\\\\]+$/'],
         ];
     }
 

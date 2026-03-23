@@ -14,7 +14,7 @@ class StoreFolderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'      => ['required', 'string', 'max:255', 'regex:/^[^\/\\\\\.\.]+$/'],
+            'name'      => ['required', 'string', 'max:255', 'regex:/^(?!.*\.\.)(?!.*[\/\\\\])[^\/\\\\]+$/'],
             'parent_id' => ['nullable', 'integer', 'exists:folders,id'],
         ];
     }
